@@ -21,9 +21,9 @@ public class L1List<T> {
     //Получить номер элемента.
     public int find(Node node) {
         int index = 0;
-        Node ne = first.next;
-        while (ne != node) {
-            ne = ne.next;
+        Node temp = first.next;
+        while (temp != node) {
+            temp = temp.next;
             index++;
         }
         return index;
@@ -35,40 +35,58 @@ public class L1List<T> {
             node.next = first;
             first = node;
         } else {
-            Node<T> current = first;
-            for (int i = 0; i < location - 1; i++) {
-                current = current.next;
+            Node<T> temp = first;
+            for (int i = 1; i < location; i++) {
+                temp = temp.next;
             }
-            node.next = current.next;
-            current.next = node;
+            node.next = temp.next;
+            temp.next = node;
         }
     }
-
+    public Node get(int location){
+        Node<T> node = first;
+        for(int i = 0; i < location; i++){
+            node = node.next;
+        }
+        return node;
+    }
+    public T removeFirst(){
+        Node<T> temp = first;
+         first = first.next;
+         if(first == null)
+             last = null;
+         size--;
+         return temp.value;
+    }
+    public T removeLast(){
+        Node <T> temp = last;
+        if(size <= 1){
+            return removeFirst();
+        }
+        Node newLast = get(size - 2);
+        last = newLast;
+        last.next = null;
+        return temp.value;
+    }
     //Удаление элемента.
     public void remove(int location) {
         if(location < 0 || location >= size)
             throw new IndexOutOfBoundsException();
         if(location == 0){
-            first = first.next;
-            size--;
-            if(size == 0)
-                last = null;
-            return;
+            removeFirst();
         }
-        Node<T> current = first;
-        for(int i = 1; i < location; i++){
-            current = current.next;
-        }
-        current.next = current.next.next;
         if(location == size - 1){
-            last = current;
+            removeLast();
         }
+        Node<T> prev = get(location-1);
+        T value = prev.next.value;
+        prev.next = prev.next.next;
         size--;
     }
 
     public void toPrint() {
-        Node<T> current = first;
-        while (current != null) {
+        Node<T> temp = first;
+        while (temp != null) {
             System.out.println(first.value);
             first = first.next;
             return;

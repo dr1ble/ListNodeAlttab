@@ -23,7 +23,7 @@ public class Main {
             else if (command2[0].equals("Alt") && command2[1].equals("Delete")) {
                 int count = command2.length - 1;
                 for (int i = 0; i < count; i++) {
-                    l.remove(l.size() - 1);
+                    l.removeFirst();
                 }
             } else if (command[0].equals("q")) {
                 break;
