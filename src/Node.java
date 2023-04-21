@@ -5,4 +5,7 @@ public class Node<T>{
         this.value = value;
         next = null;
     }
+//    public void setValue(T value){
+//
+//    }
 }
